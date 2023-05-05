@@ -1,21 +1,25 @@
-import { Box, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { Box, List } from '@mui/material';
 import Drawer from '@mui/material/Drawer';
-import ListItemButton from '@mui/material/ListItemButton';
-import DashboardIcon from '@mui/icons-material/Dashboard';
+import { useAppSelector } from '../hooks';
 
 import React from 'react';
-import BoardListItem from './BoardListItem';
+import BoardButton from './BoardButton';
+import NewBoardButton from './NewBoardButton';
 
 const SidebarComp = () => {
+  const sidebarItems = useAppSelector(
+    (state) => state.kanbanBoard.kanbanBoards
+  );
+
   return (
     <React.Fragment>
       <Drawer
         sx={{
-          width: '240px',
+          width: '15vw',
 
           flexShrink: 0,
           '& .MuiDrawer-paper': {
-            width: '240px',
+            width: '15vw',
             boxSizing: 'border-box',
             backgroundColor: '#2c2c38',
           },
@@ -34,7 +38,14 @@ const SidebarComp = () => {
         </Box>
 
         <List>
-          <BoardListItem boardName='Marketing Plan' />
+          {sidebarItems.map((item) => (
+            <BoardButton
+              key={item.id}
+              boardName={item.boardName}
+              boardId={item.id}
+            />
+          ))}
+          <NewBoardButton />
         </List>
       </Drawer>
     </React.Fragment>

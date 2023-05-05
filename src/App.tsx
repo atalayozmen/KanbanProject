@@ -1,30 +1,39 @@
-import {
-  AppBar,
-  Box,
-  Button,
-  CssBaseline,
-  IconButton,
-  Toolbar,
-} from '@mui/material';
+import { CssBaseline } from '@mui/material';
 import React from 'react';
 import './App.css';
 import SidebarComp from './components/SidebarComp';
-import MenuIcon from '@mui/icons-material/Menu';
+import AppbarComp from './components/AppbarComp';
+import KanbanBoardComp from './components/KanbanBoardComp';
+import { ThemeProvider, createTheme } from '@material-ui/core';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#ffffff', // White
+    },
+    secondary: {
+      main: '#dc004e', // Red
+    },
+    background: {
+      default: '#21212D', // Dark Grey
+
+      paper: '#2C2C38', // Light Grey
+
+      // default: '#2C2C38', // Light Grey
+      // paper: '#21212D', // Dark Grey
+    },
+  },
+});
 
 function App() {
   return (
     <React.Fragment>
-      <CssBaseline />
-      <AppBar sx={{ backgroundColor: '#2c2c38' }} position='static'>
-        <Toolbar>
-          <Box sx={{ flexGrow: 1 }} />
-          <Button variant='contained'>+ Add New Task</Button>
-          <IconButton color='primary'>
-            <MenuIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <SidebarComp />
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <AppbarComp />
+        <SidebarComp />
+        <KanbanBoardComp />
+      </ThemeProvider>
     </React.Fragment>
   );
 }
