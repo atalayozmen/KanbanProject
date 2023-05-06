@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { FormControlLabel, Checkbox, Typography, Card } from '@mui/material';
-import { Subtask } from '../slices/kanbanBoardSlice';
 import { useAppDispatch } from '../hooks';
 import { setSubtaskDone } from '../slices/kanbanBoardSlice';
 

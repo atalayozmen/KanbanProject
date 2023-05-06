@@ -2,6 +2,7 @@ import { Box, Grid, Typography } from '@mui/material';
 import React, { useEffect } from 'react';
 import {
   Column,
+  Task,
   addTask,
   deleteTask,
   selectChosenBoardId,
@@ -24,18 +25,18 @@ const ColumnComp = (props: Column) => {
   useEffect(() => {
     // This code will run every time the `boardId` value changes
     console.log('Board ID changed: ' + boardId);
-  }, [boardId]);
+  }, [boardId, props]);
 
-  const addTaskToColumn = (taskName: string, description: string) => {
-    console.log('board id: ' + boardId);
+  const addTaskToColumn = (task: Task) => {
+    console.log('addtasktocolumn task: ' + JSON.stringify(task));
 
     if (boardId != null) {
       dispatch(
         addTask({
           columnId: props.id,
-          taskName: taskName,
-          taskDescription: description,
-          subtasks: [],
+          taskName: task.name,
+          taskDescription: task.description,
+          subtasks: task.subtasks,
         })
       );
       console.log('test');
@@ -49,17 +50,21 @@ const ColumnComp = (props: Column) => {
       );
   };
 
-  const [{ isOver }, drop] = useDrop(() => ({
-    accept: 'task',
-    drop: (item: TaskCompProps) => {
-      addTaskToColumn(item.name, item.description);
-      deleteItemFromColumn(item.id, item.columnId);
-    },
-    collect: (monitor) => ({
-      isOver: !!monitor.isOver(),
+  const [{ isOver }, drop] = useDrop(
+    () => ({
+      accept: 'task',
+      drop: (item: TaskCompProps) => {
+        console.log('item is ' + JSON.stringify(item));
+        addTaskToColumn(item);
+        deleteItemFromColumn(item.id, item.columnId);
+      },
+      collect: (monitor) => ({
+        isOver: !!monitor.isOver(),
+      }),
     }),
-  }));
-  console.log('isOver: ' + isOver);
+    [props]
+  );
+
   return (
     <Grid
       ref={drop}
@@ -94,7 +99,12 @@ const ColumnComp = (props: Column) => {
       {props.tasks.map((task) => {
         return (
           <Grid item>
-            <TaskComp {...task} key={task.id} columnId={props.id} />
+            <TaskComp
+              {...task}
+              key={task.id}
+              columnName={props.name}
+              columnId={props.id}
+            />
           </Grid>
         );
       })}

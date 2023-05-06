@@ -7,11 +7,16 @@ export interface Subtask {
   done: boolean;
 }
 
+export interface Status {
+  columnId: number;
+  text: string;
+}
+
 export interface Task {
   id: number;
   name: string;
   description: string;
-  done: boolean;
+  status: Status;
   subtasks: Subtask[];
 }
 
@@ -121,7 +126,11 @@ const kanbanBoardSlice = createSlice({
             id: column.tasks.length,
             name: taskName,
             description: taskDescription,
-            done: false,
+            status: {
+              columnId: columnId,
+              text:
+                columnId === 0 ? 'TO DO' : columnId === 1 ? 'DOING' : 'DONE',
+            },
             subtasks: subtasks,
           };
           column.tasks.push(newTask);
@@ -159,9 +168,10 @@ const kanbanBoardSlice = createSlice({
         columnId: number;
         taskId: number;
         subtaskName: string;
+        done: boolean;
       }>
     ) => {
-      const { columnId, taskId, subtaskName } = action.payload;
+      const { columnId, taskId, subtaskName, done } = action.payload;
       const board = state.kanbanBoards.find(
         (board) => board.id === state.chosenBoard
       );
@@ -173,7 +183,7 @@ const kanbanBoardSlice = createSlice({
             const newSubtask: Subtask = {
               id: task.subtasks.length,
               name: subtaskName,
-              done: false,
+              done: done,
             };
             task.subtasks.push(newSubtask);
           }
@@ -213,6 +223,43 @@ const kanbanBoardSlice = createSlice({
         console.log('board not found');
       }
     },
+
+    setTaskStatus: (
+      state,
+      action: PayloadAction<{
+        columnId: number;
+        taskId: number;
+        newColumnId: number;
+      }>
+    ) => {
+      const { columnId, taskId, newColumnId } = action.payload;
+      const board = state.kanbanBoards.find(
+        (board) => board.id === state.chosenBoard
+      );
+      if (board) {
+        const column = board.columns.find((column) => column.id === columnId);
+        if (column) {
+          const task = column.tasks.find((task, index) => task.id === taskId);
+          if (task) {
+            const taskIndex = column.tasks.indexOf(task);
+            column.tasks.splice(taskIndex, 1);
+            console.log('deleted');
+            const newColumn = board.columns.find(
+              (column) => column.id === newColumnId
+            );
+            if (newColumn) {
+              newColumn.tasks.push(task);
+              console.log('added');
+            }
+          }
+        } else {
+          console.log('column not found');
+        }
+      } else {
+        console.log('board not found');
+      }
+    },
+
     setSubtaskDone: (
       state,
       action: PayloadAction<{
@@ -262,6 +309,7 @@ export const {
   deleteTask,
   deleteSubtask,
   setSubtaskDone,
+  setTaskStatus,
 } = kanbanBoardSlice.actions;
 
 export const selectKanbanBoard = (state: RootState) =>

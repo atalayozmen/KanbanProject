@@ -50,6 +50,7 @@ const ModalComp: FC<ModalCompProps> = (props) => {
       <form
         onSubmit={props.onSubmit}
         style={{
+          borderRadius: '3px',
           width: '30vw',
           display: 'flex',
           alignItems: 'center',
