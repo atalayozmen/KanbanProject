@@ -213,14 +213,8 @@ const kanbanBoardSlice = createSlice({
             if (subtaskIndex !== -1) {
               task.subtasks.splice(subtaskIndex, 1);
             }
-          } else {
-            console.log('task not found');
           }
-        } else {
-          console.log('column not found');
         }
-      } else {
-        console.log('board not found');
       }
     },
 
@@ -243,20 +237,16 @@ const kanbanBoardSlice = createSlice({
           if (task) {
             const taskIndex = column.tasks.indexOf(task);
             column.tasks.splice(taskIndex, 1);
-            console.log('deleted');
             const newColumn = board.columns.find(
               (column) => column.id === newColumnId
             );
             if (newColumn) {
               newColumn.tasks.push(task);
-              console.log('added');
             }
           }
         } else {
-          console.log('column not found');
         }
       } else {
-        console.log('board not found');
       }
     },
 
@@ -283,17 +273,9 @@ const kanbanBoardSlice = createSlice({
             );
             if (subtask) {
               subtask.done = done;
-            } else {
-              console.log('subtask not found');
             }
-          } else {
-            console.log('task not found ' + taskId);
           }
-        } else {
-          console.log('column not found');
         }
-      } else {
-        console.log('board not found');
       }
     },
   },

@@ -1,23 +1,15 @@
 import React from 'react';
-import {
-  AppBar,
-  Box,
-  Button,
-  IconButton,
-  Toolbar,
-  Typography,
-} from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import { useAppDispatch, useAppSelector } from '../hooks';
+import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   Subtask,
   addTask,
   chooseBoard,
   selectChosenBoardName,
-} from '../slices/kanbanBoardSlice';
-import ModalComp, { ModalElement } from './ModalComp';
+} from '../../slices/kanbanBoardSlice';
+import ModalComp, { ModalElement } from '../modal/ModalComp';
 import { makeStyles } from '@material-ui/core';
-import SubTaskListComp from './SubTaskListComp';
+import SubTaskListComp from '../subtask/SubTaskListComp';
 
 const useStyles = makeStyles({
   input: {
@@ -65,8 +57,6 @@ function AppbarComp() {
       setSelectPropOption({ value: 1, label: 'In Progress' });
     if (event.target.value === '2')
       setSelectPropOption({ value: 2, label: 'Done' });
-
-    console.log('selectPropValue: ' + selectPropOption.label);
   };
 
   const handleNewTaskNameInputChange = (event: any) => {
@@ -79,10 +69,8 @@ function AppbarComp() {
 
   const onModalAddTaskButtonClick = (event: any) => {
     event.preventDefault();
-    console.log(chosenBoard);
     if (chosenBoard != null) {
       dispatch(chooseBoard(chosenBoard));
-      console.log('test');
 
       const subtaskList: Subtask[] = subtasks.map((subtask, index) => {
         const newSubtask: Subtask = {
@@ -146,23 +134,9 @@ function AppbarComp() {
       type: 'select',
       label: 'Status',
       props: {
-        InputLabelProps: {
-          style: {
-            color: 'white', // set the label font color here
-          },
-        },
-        sx: {
-          '& .MuiInputBase-input': {
-            color: 'white', // set the font color here
-          },
-          width: '100%',
-        },
         label: 'Status',
         value: selectPropOption.value,
         onChange: handleSelectPropChange,
-        SelectProps: {
-          native: true,
-        },
       },
       selectPropsOptions: [
         {
@@ -171,7 +145,7 @@ function AppbarComp() {
         },
         {
           value: '1',
-          label: 'In Progress',
+          label: 'Doing',
         },
         {
           value: '2',
@@ -218,19 +192,25 @@ function AppbarComp() {
         sx={{
           display: 'flex',
           flexDirection: 'row',
+          width: '100%',
           backgroundColor: '#2c2c38',
         }}
-        position='static'
+        position='fixed'
       >
         <Box
           sx={{
-            marginLeft: '16vw',
+            marginLeft: '19vw',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
           }}
         >
-          <Typography fontWeight='bold' variant='h5' component='div'>
+          <Typography
+            fontWeight='600'
+            fontFamily='sans-serif'
+            variant='h5'
+            component='div'
+          >
             {chosenBoardName}
           </Typography>
         </Box>
@@ -244,11 +224,9 @@ function AppbarComp() {
           >
             + Add New Task
           </Button>
-          <IconButton color='primary'>
-            <MenuIcon />
-          </IconButton>
         </Toolbar>
       </AppBar>
+      <Toolbar />
     </React.Fragment>
   );
 }

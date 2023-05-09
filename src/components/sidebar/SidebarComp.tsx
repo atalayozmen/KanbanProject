@@ -1,6 +1,6 @@
-import { Box, List } from '@mui/material';
+import { Box, List, Typography } from '@mui/material';
 import Drawer from '@mui/material/Drawer';
-import { useAppSelector } from '../hooks';
+import { useAppSelector } from '../../hooks';
 
 import React from 'react';
 import BoardButton from './BoardButton';
@@ -15,11 +15,10 @@ const SidebarComp = () => {
     <React.Fragment>
       <Drawer
         sx={{
-          width: '15vw',
-
+          width: '18vw',
           flexShrink: 0,
           '& .MuiDrawer-paper': {
-            width: '15vw',
+            width: '18vw',
             boxSizing: 'border-box',
             backgroundColor: '#2c2c38',
           },
@@ -32,10 +31,22 @@ const SidebarComp = () => {
         >
           <img
             style={{ width: '55%' }}
-            src={require('../logo-no-background.png')}
+            src={require('../../logo-no-background.png')}
             alt='Logo'
           ></img>
         </Box>
+
+        <Typography
+          variant='h6'
+          sx={{
+            color: '#858995',
+            display: 'flex',
+            marginTop: '15%',
+            marginLeft: '15%',
+          }}
+        >
+          All Boards ({sidebarItems.length})
+        </Typography>
 
         <List>
           {sidebarItems.map((item) => (

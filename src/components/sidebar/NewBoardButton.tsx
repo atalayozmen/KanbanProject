@@ -7,10 +7,10 @@ import {
 } from '@mui/material';
 
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import { useAppDispatch } from '../hooks';
+import { useAppDispatch } from '../../hooks';
 import { makeStyles } from '@material-ui/core';
-import { addKanbanBoard } from '../slices/kanbanBoardSlice';
-import ModalComp, { ModalElement } from './ModalComp';
+import { addKanbanBoard } from '../../slices/kanbanBoardSlice';
+import ModalComp, { ModalElement } from '../modal/ModalComp';
 
 const useStyles = makeStyles({
   input: {
@@ -32,7 +32,6 @@ const NewBoardButton = () => {
 
   const submitNewBoardHandler = (event: any) => {
     event.preventDefault();
-    console.log('Submit new board');
     dispatch(addKanbanBoard(newBoardName));
     handleCloseModal();
   };
@@ -79,13 +78,26 @@ const NewBoardButton = () => {
         onSubmit={submitNewBoardHandler}
         modalElements={modalElements}
       />
-      <ListItem>
+      <ListItem sx={{ paddingLeft: '0px' }}>
         <ListItemButton onClick={handleOpenModal}>
           <ListItemIcon>
-            <DashboardIcon sx={{ color: '#858995' }} />{' '}
+            <DashboardIcon
+              sx={{
+                color: '#b388ff',
+                '&:hover': {
+                  backgroundColor: '#b388ff',
+                  color: '#b388ff',
+                },
+              }}
+            />{' '}
           </ListItemIcon>
           <ListItemText
-            sx={{ color: '#858995' }}
+            sx={{
+              color: '#b388ff',
+              '&:hover': {
+                color: '#b388ff',
+              },
+            }}
             primary='+ Create a new board'
           />
         </ListItemButton>

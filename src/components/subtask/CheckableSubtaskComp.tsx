@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FormControlLabel, Checkbox, Typography, Card } from '@mui/material';
-import { useAppDispatch } from '../hooks';
-import { setSubtaskDone } from '../slices/kanbanBoardSlice';
+import { useAppDispatch } from '../../hooks';
+import { setSubtaskDone } from '../../slices/kanbanBoardSlice';
 
 interface CheckableSubtaskCompProps {
   columnId: number;
@@ -12,17 +12,20 @@ interface CheckableSubtaskCompProps {
 }
 
 const CheckableSubtaskComp = (props: CheckableSubtaskCompProps) => {
-  const [checked, setChecked] = useState(props.done);
+  const { done } = props;
+
+  const [checked, setChecked] = useState(done);
   const dispatch = useAppDispatch();
 
+  const { columnId, taskId, subtaskId, subtaskName } = props;
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('event.target.checked: ', event.target.checked);
     setChecked(event.target.checked);
     dispatch(
       setSubtaskDone({
-        columnId: props.columnId,
-        taskId: props.taskId,
-        subtaskId: props.subtaskId,
+        columnId: columnId,
+        taskId: taskId,
+        subtaskId: subtaskId,
         done: event.target.checked,
       })
     );
@@ -32,7 +35,7 @@ const CheckableSubtaskComp = (props: CheckableSubtaskCompProps) => {
     <Card
       sx={{
         width: '100%',
-        marginBottom: '2vh',
+        marginBottom: '1.5vh',
         paddingTop: '1vh',
         paddingBottom: '1vh',
         paddingLeft: '1vw',
@@ -58,7 +61,7 @@ const CheckableSubtaskComp = (props: CheckableSubtaskCompProps) => {
             sx={{ marginLeft: '1vw', color: '#FFFFFF' }}
             variant='body1'
           >
-            {props.subtaskName}
+            {subtaskName}
           </Typography>
         }
       />

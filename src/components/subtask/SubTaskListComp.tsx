@@ -9,8 +9,10 @@ interface SubTaskListCompProps {
 }
 
 const SubTaskListComp = (props: SubTaskListCompProps) => {
+  const { subTaskFields, onSubtaskTextFieldChange, addSubTask } = props;
+
   const onTextFieldChange = (index: number, value: string) => {
-    props.onSubtaskTextFieldChange(index, value);
+    onSubtaskTextFieldChange(index, value);
   };
 
   return (
@@ -18,7 +20,7 @@ const SubTaskListComp = (props: SubTaskListCompProps) => {
       <Typography sx={{ fontSize: 16 }} color='#FFFFFF' component='div'>
         Subtasks
       </Typography>
-      {props.subTaskFields.map((subTask: string, index: number) => (
+      {subTaskFields.map((subTask: string, index: number) => (
         <Grid
           sx={{ marginBottom: '2vh' }}
           container
@@ -51,7 +53,11 @@ const SubTaskListComp = (props: SubTaskListCompProps) => {
         </Grid>
       ))}
 
-      <Button variant='contained' onClick={props.addSubTask}>
+      <Button
+        sx={{ marginBottom: '1vh' }}
+        variant='contained'
+        onClick={addSubTask}
+      >
         {' '}
         +Add New Subtask
       </Button>

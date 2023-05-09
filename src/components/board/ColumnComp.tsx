@@ -6,14 +6,19 @@ import {
   addTask,
   deleteTask,
   selectChosenBoardId,
-} from '../slices/kanbanBoardSlice';
-import TaskComp, { TaskCompProps } from './TaskComp';
+} from '../../slices/kanbanBoardSlice';
+import TaskComp, { TaskCompProps } from '../task/TaskComp';
 import { useDrop } from 'react-dnd/dist/hooks';
-import { useAppDispatch, useAppSelector } from '../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import Toolbar from '@mui/material/Toolbar/Toolbar';
 
 const shapeStyles = {
-  width: '1.5vh',
-  height: '1.5vh',
+  minWidth: '10px',
+  minHeight: '10px',
+  maxWidth: '14px',
+  maxHeight: '14px',
+  width: '1.5vw',
+  height: '1.5vw',
   marginRight: '1vw',
 };
 const shapeCircleStyles = { borderRadius: '50%' };
@@ -22,24 +27,22 @@ const ColumnComp = (props: Column) => {
   const dispatch = useAppDispatch();
   const boardId = useAppSelector(selectChosenBoardId);
 
+  const { name, id, tasks } = props;
+
   useEffect(() => {
     // This code will run every time the `boardId` value changes
-    console.log('Board ID changed: ' + boardId);
   }, [boardId, props]);
 
   const addTaskToColumn = (task: Task) => {
-    console.log('addtasktocolumn task: ' + JSON.stringify(task));
-
     if (boardId != null) {
       dispatch(
         addTask({
-          columnId: props.id,
+          columnId: id,
           taskName: task.name,
           taskDescription: task.description,
           subtasks: task.subtasks,
         })
       );
-      console.log('test');
     }
   };
 
@@ -54,7 +57,6 @@ const ColumnComp = (props: Column) => {
     () => ({
       accept: 'task',
       drop: (item: TaskCompProps) => {
-        console.log('item is ' + JSON.stringify(item));
         addTaskToColumn(item);
         deleteItemFromColumn(item.id, item.columnId);
       },
@@ -70,8 +72,9 @@ const ColumnComp = (props: Column) => {
       ref={drop}
       item
       justifyContent={'center'}
-      xs={2}
-      sx={{ paddingX: '2vw', paddingY: '2vh', background: '#21212D' }}
+      xs={3}
+      sx={{ paddingY: '2vh', paddingX: '1vw', background: '#21212D' }}
+      position={'static'}
     >
       <Box
         component='span'
@@ -80,31 +83,27 @@ const ColumnComp = (props: Column) => {
           ...shapeCircleStyles,
           display: 'inline-block',
           bgcolor:
-            props.name === 'DOING'
+            name === 'DOING'
               ? '#8370EF'
-              : props.name === 'TO DO'
+              : name === 'TO DO'
               ? '#90caf9'
               : '#1de9b6',
         }}
       ></Box>
       <Typography
-        fontWeight='bold'
-        sx={{ color: 'white', fontSize: '1vw' }}
+        fontFamily='sans-serif'
+        fontWeight={500}
+        sx={{ color: '#858995' }}
         variant='body1'
         component='span'
       >
-        {props.name}
+        {name === 'DOING' ? 'Doing' : name === 'TO DO' ? 'To Do' : 'Done'}
       </Typography>
 
-      {props.tasks.map((task) => {
+      {tasks.map((task) => {
         return (
           <Grid item>
-            <TaskComp
-              {...task}
-              key={task.id}
-              columnName={props.name}
-              columnId={props.id}
-            />
+            <TaskComp {...task} key={task.id} columnName={name} columnId={id} />
           </Grid>
         );
       })}

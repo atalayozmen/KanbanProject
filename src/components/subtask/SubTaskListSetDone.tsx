@@ -1,6 +1,7 @@
 import React from 'react';
-import { Subtask } from '../slices/kanbanBoardSlice';
+import { Subtask } from '../../slices/kanbanBoardSlice';
 import CheckableSubtaskComp from './CheckableSubtaskComp';
+import { Box } from '@mui/material';
 
 interface SubTaskListSetDoneProps {
   columnId: number;
@@ -9,20 +10,22 @@ interface SubTaskListSetDoneProps {
 }
 
 const SubTaskListSetDone = (props: SubTaskListSetDoneProps) => {
+  const { subTasks, columnId, taskId } = props;
+
   return (
-    <React.Fragment>
-      {props.subTasks.map((subtask) => {
+    <Box sx={{ marginBottom: '4vh' }}>
+      {subTasks.map((subtask) => {
         return (
           <CheckableSubtaskComp
-            columnId={props.columnId}
-            taskId={props.taskId}
+            columnId={columnId}
+            taskId={taskId}
             subtaskId={subtask.id}
             subtaskName={subtask.name}
             done={subtask.done}
           />
         );
       })}
-    </React.Fragment>
+    </Box>
   );
 };
 

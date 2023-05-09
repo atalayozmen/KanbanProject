@@ -12,11 +12,12 @@ import {
   Typography,
   Box,
 } from '@mui/material';
-import SelectComp from './SelectComp';
+import SelectComp from '../select/SelectComp';
 
 export interface ModalElement {
   type: 'textfield' | 'button' | 'select' | 'radio' | 'custom' | 'typography';
   label: string;
+  render?: boolean;
   props:
     | TextFieldProps
     | ButtonProps
@@ -35,12 +36,13 @@ interface ModalCompProps {
 }
 
 const ModalComp: FC<ModalCompProps> = (props) => {
+  const { modalOpen, handleCloseModal, onSubmit, modalElements } = props;
   return (
     <Modal
       aria-labelledby='modal-modal-title'
       aria-describedby='modal-modal-description'
-      open={props.modalOpen}
-      onClose={props.handleCloseModal}
+      open={modalOpen}
+      onClose={handleCloseModal}
       sx={{
         display: 'flex',
         alignItems: 'center',
@@ -48,7 +50,7 @@ const ModalComp: FC<ModalCompProps> = (props) => {
       }}
     >
       <form
-        onSubmit={props.onSubmit}
+        onSubmit={onSubmit}
         style={{
           borderRadius: '3px',
           width: '30vw',
@@ -65,7 +67,7 @@ const ModalComp: FC<ModalCompProps> = (props) => {
       >
         <Grid justifyContent={'center'} container>
           <Grid item justifyContent={'center'} xs={12}>
-            {props.modalElements.map((element) => {
+            {modalElements.map((element) => {
               if (element.type === 'textfield') {
                 return (
                   <Box key={element.label}>
@@ -90,6 +92,10 @@ const ModalComp: FC<ModalCompProps> = (props) => {
                 );
               }
               if (element.type === 'typography') {
+                if (element.render !== undefined && element.render === false) {
+                  return <></>;
+                }
+
                 return (
                   <Typography
                     key={element.label}
@@ -106,7 +112,7 @@ const ModalComp: FC<ModalCompProps> = (props) => {
                     style={{
                       display: 'flex',
                       justifyContent: 'center',
-                      marginTop: '4vh',
+                      marginTop: '1vh',
                     }}
                   >
                     <Button {...(element.props as ButtonProps)}>

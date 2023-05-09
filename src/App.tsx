@@ -1,9 +1,9 @@
-import { CssBaseline } from '@mui/material';
+import { Box, CssBaseline } from '@mui/material';
 import React from 'react';
 import './App.css';
-import SidebarComp from './components/SidebarComp';
-import AppbarComp from './components/AppbarComp';
-import KanbanBoardComp from './components/KanbanBoardComp';
+import SidebarComp from './components/sidebar/SidebarComp';
+import AppbarComp from './components/appbar/AppbarComp';
+import KanbanBoardComp from './components/board/KanbanBoardComp';
 import { ThemeProvider, createTheme } from '@material-ui/core';
 
 const theme = createTheme({
@@ -27,14 +27,18 @@ const theme = createTheme({
 
 function App() {
   return (
-    <React.Fragment>
+    <Box
+      style={{
+        overflowY: 'hidden',
+      }}
+    >
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <AppbarComp />
         <SidebarComp />
         <KanbanBoardComp />
       </ThemeProvider>
-    </React.Fragment>
+    </Box>
   );
 }
 

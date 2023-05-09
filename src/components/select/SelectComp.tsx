@@ -1,7 +1,7 @@
 import * as React from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import { SelectProps } from '@mui/material/Select/Select';
 import { InputLabel } from '@mui/material';
 
@@ -11,6 +11,8 @@ interface SelectCompProps extends SelectProps {
 }
 
 const SelectComp = (props: SelectCompProps) => {
+  const { options } = props;
+
   return (
     <FormControl
       sx={{
@@ -31,8 +33,17 @@ const SelectComp = (props: SelectCompProps) => {
         id='demo-simple-select'
         {...props}
         onChange={props.onChange}
+        sx={{
+          '& .MuiInputBase-input': {
+            color: 'white', // set the font color here
+          },
+          '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: 'white',
+          },
+          width: '100%',
+        }}
       >
-        {props.options.map((option) => {
+        {options.map((option) => {
           return (
             <MenuItem key={option.value + option.label} value={option.value}>
               {option.label}

@@ -3,12 +3,12 @@ import { useEffect } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { Task, setTaskStatus } from '../slices/kanbanBoardSlice';
+import { Task, setTaskStatus } from '../../slices/kanbanBoardSlice';
 import { useDrag } from 'react-dnd/dist/hooks';
 import { Button, CardActionArea } from '@material-ui/core';
-import ModalComp, { ModalElement } from './ModalComp';
-import SubTaskListSetDone from './SubTaskListSetDone';
-import { useAppDispatch } from '../hooks';
+import ModalComp, { ModalElement } from '../modal/ModalComp';
+import SubTaskListSetDone from '../subtask/SubTaskListSetDone';
+import { useAppDispatch } from '../../hooks';
 
 export interface TaskCompProps extends Task {
   columnId: number;
@@ -20,7 +20,14 @@ interface SelectPropOption {
   label: string;
 }
 
+const options: SelectPropOption[] = [
+  { value: 0, label: 'To Do' },
+  { value: 1, label: 'Doing' },
+  { value: 2, label: 'Done' },
+];
+
 const TaskComp = (props: TaskCompProps) => {
+  const { id, name, description, subtasks, columnId, columnName } = props;
   const [{ isDragging }, drag] = useDrag(
     () => ({
       type: 'task',
@@ -29,18 +36,18 @@ const TaskComp = (props: TaskCompProps) => {
         isDragging: !!monitor.isDragging(),
       }),
     }),
-    [props.subtasks]
+    [subtasks]
   );
+
+  const [modalOpen, setModalOpen] = React.useState(false);
 
   const [selectPropOption, setSelectPropOption] =
     React.useState<SelectPropOption>({
-      value: props.columnId,
-      label: props.columnName,
+      value: columnId,
+      label: columnName,
     });
 
-  useEffect(() => {
-    console.log('taskcomp render');
-  }, [props]);
+  useEffect(() => {}, [props]);
 
   const dispatch = useAppDispatch();
 
@@ -48,40 +55,21 @@ const TaskComp = (props: TaskCompProps) => {
     setModalOpen(false);
   };
 
-  const [modalOpen, setModalOpen] = React.useState(false);
-
   const taskClickHandler = () => {
     setModalOpen(true);
   };
 
   const handleSelectPropChange = (event: any) => {
-    if (event.target.value === '0') {
-      setSelectPropOption({ value: 0, label: 'To Do' });
+    const value = event.target.value;
+    const selectOption = options.find((option) => option.value === value);
+
+    if (selectOption !== undefined) {
+      setSelectPropOption(selectOption);
       dispatch(
         setTaskStatus({
-          columnId: props.columnId,
-          taskId: props.id,
-          newColumnId: 0,
-        })
-      );
-    }
-    if (event.target.value === '1') {
-      setSelectPropOption({ value: 1, label: 'Doing' });
-      dispatch(
-        setTaskStatus({
-          columnId: props.columnId,
-          taskId: props.id,
-          newColumnId: 1,
-        })
-      );
-    }
-    if (event.target.value === '2') {
-      setSelectPropOption({ value: 2, label: 'Done' });
-      dispatch(
-        setTaskStatus({
-          columnId: props.columnId,
-          taskId: props.id,
-          newColumnId: 2,
+          columnId: columnId,
+          taskId: id,
+          newColumnId: value,
         })
       );
     }
@@ -90,7 +78,7 @@ const TaskComp = (props: TaskCompProps) => {
   const modalElements: ModalElement[] = [
     {
       type: 'typography',
-      label: props.name,
+      label: name,
       props: {
         fontWeight: 'bold',
         sx: { fontSize: 18, color: '#FFFFFF' },
@@ -99,9 +87,22 @@ const TaskComp = (props: TaskCompProps) => {
     },
     {
       type: 'typography',
-      label: props.description,
+      label: description,
       props: {
-        sx: { fontSize: 14, color: '#8C91A1', marginBottom: '2vh' },
+        sx: { fontSize: 14, color: '#8C91A1', marginBottom: '4vh' },
+      },
+    },
+    {
+      type: 'typography',
+      label: 'Subtasks',
+      render: subtasks.length > 0,
+      props: {
+        sx: {
+          fontSize: 16,
+          fontWeight: 600,
+          color: 'white',
+          marginBottom: '2vh',
+        },
       },
     },
     {
@@ -110,9 +111,9 @@ const TaskComp = (props: TaskCompProps) => {
       props: {},
       customElement: (
         <SubTaskListSetDone
-          columnId={props.columnId}
-          taskId={props.id}
-          subTasks={props.subtasks}
+          columnId={columnId}
+          taskId={id}
+          subTasks={subtasks}
         />
       ),
     },
@@ -163,11 +164,7 @@ const TaskComp = (props: TaskCompProps) => {
         handleCloseModal={handleCloseModal}
         modalElements={modalElements}
       />
-      <Button
-        onClick={() => {
-          console.log(props);
-        }}
-      ></Button>
+
       <Card
         ref={drag}
         sx={{ width: '100%', marginBottom: '2vh', background: '#2C2C38' }}
@@ -180,13 +177,13 @@ const TaskComp = (props: TaskCompProps) => {
               color='white'
               gutterBottom
             >
-              {props.name}
+              {name}
             </Typography>
             <Typography sx={{ fontsize: 12 }} color='#8C91A1' component='div'>
-              {props.subtasks.length > 0
-                ? props.subtasks.filter((s) => s.done).length +
+              {subtasks.length > 0
+                ? subtasks.filter((s) => s.done).length +
                   ' of ' +
-                  props.subtasks.length +
+                  subtasks.length +
                   ' Subtasks'
                 : ''}
             </Typography>
