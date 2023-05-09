@@ -14,6 +14,8 @@ import {
 } from '@mui/material';
 import SelectComp from '../select/SelectComp';
 
+import { useMediaQuery } from '@mui/material';
+
 export interface ModalElement {
   type: 'textfield' | 'button' | 'select' | 'radio' | 'custom' | 'typography';
   label: string;
@@ -37,6 +39,8 @@ interface ModalCompProps {
 
 const ModalComp: FC<ModalCompProps> = (props) => {
   const { modalOpen, handleCloseModal, onSubmit, modalElements } = props;
+  const matches = useMediaQuery('(min-width:600px)');
+
   return (
     <Modal
       aria-labelledby='modal-modal-title'
@@ -53,7 +57,7 @@ const ModalComp: FC<ModalCompProps> = (props) => {
         onSubmit={onSubmit}
         style={{
           borderRadius: '3px',
-          width: '30vw',
+          width: matches ? '35vw' : '90vw',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',

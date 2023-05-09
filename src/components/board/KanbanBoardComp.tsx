@@ -6,23 +6,30 @@ import { Grid, Typography } from '@mui/material';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import Box from '@mui/material/Box/Box';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const KanbanBoardComp = () => {
   const board = useAppSelector(selectChosenBoard);
+  const matches = useMediaQuery('(min-width:600px)');
 
   if (board) {
     return (
       <DndProvider backend={HTML5Backend}>
         <Grid
-          container
           sx={{
+            display: 'grid',
+            gridAutoFlow: 'column',
+            gridTemplateColumns: '0',
+            gridAutoColumns: '33%',
             background: '#21212D',
+            paddingLeft: '1vw',
             height: '100vh',
             width: '100%',
             overflowY: 'hidden',
+            overflowX: 'auto',
           }}
         >
-          <Box width='18%' />
+          <Box width={matches ? '18%' : '0'} />
           {board.columns.map((column: Column) => (
             <ColumnComp {...column} key={column.id} />
           ))}
@@ -43,11 +50,11 @@ const KanbanBoardComp = () => {
       >
         <Box>
           <Typography
-            variant='h3'
+            variant={matches ? 'h3' : 'h4'}
             sx={{
               color: '#fff',
               wordWrap: 'break-word',
-              marginLeft: '25vw',
+              marginLeft: matches ? '25vw' : '5vw',
               marginRight: '5vw',
             }}
           >
@@ -56,20 +63,39 @@ const KanbanBoardComp = () => {
           </Typography>
 
           <Typography
-            variant='h5'
-            sx={{ color: '#fff', marginLeft: '25vw', marginTop: '5vh' }}
+            variant={matches ? 'h5' : 'h6'}
+            sx={{
+              color: '#fff',
+              marginLeft: matches ? '25vw' : '5vw',
+              marginTop: '5vh',
+              marginRight: '5vw',
+            }}
           >
-            Use the "Create a new board" button to start.
+            {matches
+              ? 'Use the "Create a new board" button to start.'
+              : 'Use the + button to create a board and add tasks.'}
           </Typography>
           <Typography
-            variant='h5'
-            sx={{ color: '#fff', marginLeft: '25vw', marginTop: '2vh' }}
+            variant={matches ? 'h5' : 'h6'}
+            sx={{
+              color: '#fff',
+              marginLeft: matches ? '25vw' : '5vw',
+              marginTop: '2vh',
+              marginRight: '5vw',
+            }}
           >
-            Choose a board from the sidebar to view it.
+            {matches
+              ? 'Choose a board from the sidebar to view it.'
+              : 'Choose a board from the left top menu to change it.'}
           </Typography>
           <Typography
-            variant='h5'
-            sx={{ color: '#fff', marginLeft: '25vw', marginTop: '2vh' }}
+            variant={matches ? 'h5' : 'h6'}
+            sx={{
+              color: '#fff',
+              marginLeft: matches ? '25vw' : '5vw',
+              marginTop: '2vh',
+              marginRight: '5vw',
+            }}
           >
             Tasks can be dragged and dropped between columns.
           </Typography>

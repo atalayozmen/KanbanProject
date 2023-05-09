@@ -62,7 +62,8 @@ const TaskComp = (props: TaskCompProps) => {
   };
 
   const handleSelectPropChange = (event: any) => {
-    const value = event.target.value;
+    const value: number = parseInt(event.target.value);
+
     const selectOption = options.find((option) => option.value === value);
 
     if (selectOption !== undefined) {

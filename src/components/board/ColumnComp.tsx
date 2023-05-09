@@ -68,13 +68,9 @@ const ColumnComp = (props: Column) => {
   console.log(isOver);
 
   return (
-    <Grid
+    <Box
       ref={drop}
-      item
-      justifyContent={'center'}
-      xs={3}
       sx={{ paddingY: '2vh', paddingX: '1vw', background: '#21212D' }}
-      position={'static'}
     >
       <Box
         component='span'
@@ -107,7 +103,7 @@ const ColumnComp = (props: Column) => {
           </Grid>
         );
       })}
-    </Grid>
+    </Box>
   );
 };
 

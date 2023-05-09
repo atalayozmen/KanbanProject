@@ -7,25 +7,19 @@ import {
 } from '@mui/material';
 
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import { useAppDispatch } from '../../hooks';
-import { addKanbanBoard } from '../../slices/kanbanBoardSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import {
+  addKanbanBoard,
+  setModalOpenState,
+} from '../../slices/kanbanBoardSlice';
 import ModalComp, { ModalElement } from '../modal/ModalComp';
 
-/*const useStyles = makeStyles({
-  input: {
-    color: 'white', // set the text color to red
-  },
-  textField: {
-    '& .MuiInputBase-input': {
-      color: 'white', // set the font color here
-    },
-  },
-});*/
-
 const NewBoardButton = () => {
-  const dispatch = useAppDispatch();
-
   const [newBoardName, setNewBoardName] = useState<string>('');
+
+  const modalOpenState = useAppSelector((state) => state.kanbanBoard.modalOpen);
+
+  const dispatch = useAppDispatch();
 
   const submitNewBoardHandler = (event: any) => {
     event.preventDefault();
@@ -37,6 +31,7 @@ const NewBoardButton = () => {
 
   const handleCloseModal = () => {
     setModalOpen(false);
+    dispatch(setModalOpenState(false));
     setNewBoardName('');
   };
 
@@ -68,7 +63,7 @@ const NewBoardButton = () => {
   return (
     <Fragment>
       <ModalComp
-        modalOpen={modalOpen}
+        modalOpen={modalOpen || modalOpenState === 'addBoard'}
         handleCloseModal={handleCloseModal}
         onSubmit={submitNewBoardHandler}
         modalElements={modalElements}

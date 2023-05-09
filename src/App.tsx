@@ -56,11 +56,7 @@ const theme = createTheme({
 
 function App() {
   return (
-    <Box
-      style={{
-        overflowY: 'hidden',
-      }}
-    >
+    <Box style={{}}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <AppbarComp />

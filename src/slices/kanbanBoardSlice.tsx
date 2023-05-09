@@ -35,11 +35,13 @@ interface KanbanBoard {
 interface KanbanBoardState {
   kanbanBoards: KanbanBoard[];
   chosenBoard: number | null;
+  modalOpen: 'addTask' | 'addBoard' | false;
 }
 
 const initialState: KanbanBoardState = {
   kanbanBoards: [],
   chosenBoard: null,
+  modalOpen: false,
 };
 
 const kanbanBoardSlice = createSlice({
@@ -48,6 +50,12 @@ const kanbanBoardSlice = createSlice({
   reducers: {
     chooseBoard: (state, action: PayloadAction<number>) => {
       state.chosenBoard = action.payload;
+    },
+    setModalOpenState: (
+      state,
+      action: PayloadAction<'addTask' | 'addBoard' | false>
+    ) => {
+      state.modalOpen = action.payload;
     },
     addKanbanBoard: (state, action: PayloadAction<string>) => {
       const columns = [
@@ -75,6 +83,7 @@ const kanbanBoardSlice = createSlice({
       };
 
       state.kanbanBoards.push(newBoard);
+      state.chosenBoard = newBoard.id;
     },
     addColumn: (
       state,
@@ -292,6 +301,7 @@ export const {
   deleteSubtask,
   setSubtaskDone,
   setTaskStatus,
+  setModalOpenState,
 } = kanbanBoardSlice.actions;
 
 export const selectKanbanBoard = (state: RootState) =>

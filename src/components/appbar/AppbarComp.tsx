@@ -6,10 +6,14 @@ import {
   addTask,
   chooseBoard,
   selectChosenBoardName,
+  setModalOpenState,
 } from '../../slices/kanbanBoardSlice';
 import ModalComp, { ModalElement } from '../modal/ModalComp';
 import { makeStyles } from '@material-ui/core';
 import SubTaskListComp from '../subtask/SubTaskListComp';
+import BoardMenu from '../board/BoardMenu';
+import AddMenu from './AddMenu';
+import { useMediaQuery } from '@mui/material';
 
 const useStyles = makeStyles({
   input: {
@@ -28,18 +32,21 @@ function AppbarComp() {
   const dispatch = useAppDispatch();
   const chosenBoard = useAppSelector((state) => state.kanbanBoard.chosenBoard);
   const chosenBoardName = useAppSelector(selectChosenBoardName);
+  const modalOpenState = useAppSelector((state) => state.kanbanBoard.modalOpen);
 
   const [newTaskName, setNewTaskName] = React.useState<string>('');
   const [newTaskDescription, setNewTaskDescription] =
     React.useState<string>('');
-
   const [selectPropOption, setSelectPropOption] =
     React.useState<SelectPropOption>({ value: 0, label: 'To Do' });
   const [subtasks, setSubtasks] = React.useState<string[]>([]);
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
 
+  const matches = useMediaQuery('(min-width:600px)');
+
   const handleCloseModal = () => {
     setModalOpen(false);
+    dispatch(setModalOpenState(false));
     resetState();
   };
 
@@ -95,6 +102,7 @@ function AppbarComp() {
 
   const onTaskButtonClick = () => {
     setModalOpen(true);
+    dispatch(setModalOpenState('addTask'));
   };
 
   const onAddSubtaskButtonClick = () => {
@@ -182,7 +190,7 @@ function AppbarComp() {
   return (
     <React.Fragment>
       <ModalComp
-        modalOpen={modalOpen}
+        modalOpen={modalOpen || modalOpenState === 'addTask'}
         handleCloseModal={handleCloseModal}
         onSubmit={onModalAddTaskButtonClick}
         modalElements={modalElements}
@@ -197,10 +205,22 @@ function AppbarComp() {
         position='fixed'
       >
         <Box
+          display='flex'
+          justifyContent='center'
+          alignItems='center'
+          maxWidth={'10%'}
+        >
+          <img
+            style={{ maxWidth: '100%', minWidth: '40px', height: 'auto' }}
+            src={require('../../icons8-kanban-96.png')}
+            alt='knban'
+          ></img>
+        </Box>
+        <Box
           sx={{
-            marginLeft: '19vw',
+            marginLeft: matches ? '19vw' : '4vw',
             display: 'flex',
-            justifyContent: 'center',
+            justifyContent: 'start',
             alignItems: 'center',
           }}
         >
@@ -212,13 +232,19 @@ function AppbarComp() {
           >
             {chosenBoardName}
           </Typography>
+          {!matches && chosenBoard ? <BoardMenu /> : <></>}
         </Box>
 
         <Toolbar sx={{ flexGrow: 1 }}>
           <Box sx={{ flexGrow: 1 }} />
-          <Button onClick={onTaskButtonClick} variant='contained'>
-            + Add New Task
-          </Button>
+
+          {matches ? (
+            <Button onClick={onTaskButtonClick} variant='contained'>
+              + Add New Task
+            </Button>
+          ) : (
+            <AddMenu />
+          )}
         </Toolbar>
       </AppBar>
       <Toolbar />
