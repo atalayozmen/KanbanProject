@@ -5,7 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { Task, setTaskStatus } from '../../slices/kanbanBoardSlice';
 import { useDrag } from 'react-dnd/dist/hooks';
-import { Button, CardActionArea } from '@material-ui/core';
+import { CardActionArea } from '@material-ui/core';
 import ModalComp, { ModalElement } from '../modal/ModalComp';
 import SubTaskListSetDone from '../subtask/SubTaskListSetDone';
 import { useAppDispatch } from '../../hooks';
@@ -38,6 +38,8 @@ const TaskComp = (props: TaskCompProps) => {
     }),
     [subtasks]
   );
+
+  console.log(isDragging);
 
   const [modalOpen, setModalOpen] = React.useState(false);
 

@@ -10,7 +10,6 @@ import {
 import TaskComp, { TaskCompProps } from '../task/TaskComp';
 import { useDrop } from 'react-dnd/dist/hooks';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import Toolbar from '@mui/material/Toolbar/Toolbar';
 
 const shapeStyles = {
   minWidth: '10px',
@@ -66,6 +65,7 @@ const ColumnComp = (props: Column) => {
     }),
     [props]
   );
+  console.log(isOver);
 
   return (
     <Grid
