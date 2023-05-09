@@ -4,7 +4,7 @@ import './App.css';
 import SidebarComp from './components/sidebar/SidebarComp';
 import AppbarComp from './components/appbar/AppbarComp';
 import KanbanBoardComp from './components/board/KanbanBoardComp';
-import { ThemeProvider, createTheme } from '@material-ui/core';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
   palette: {
