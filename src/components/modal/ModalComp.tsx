@@ -74,15 +74,6 @@ const ModalComp: FC<ModalCompProps> = (props) => {
                     <Typography></Typography>
                     <TextField
                       sx={{
-                        '& .MuiOutlinedInput-root': {
-                          '& > fieldset': { borderColor: '#404258' },
-                        },
-                        '& .MuiInputBase-input': {
-                          color: 'white', // set the font color here
-                        },
-                        '& .MuiInputLabel-root': {
-                          color: '#bdbdbd', // set the label font color here
-                        },
                         marginBottom: '2vh',
                         width: '100%',
                       }}

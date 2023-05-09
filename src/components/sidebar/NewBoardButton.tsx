@@ -8,11 +8,10 @@ import {
 
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import { useAppDispatch } from '../../hooks';
-import { makeStyles } from '@material-ui/core';
 import { addKanbanBoard } from '../../slices/kanbanBoardSlice';
 import ModalComp, { ModalElement } from '../modal/ModalComp';
 
-const useStyles = makeStyles({
+/*const useStyles = makeStyles({
   input: {
     color: 'white', // set the text color to red
   },
@@ -21,12 +20,10 @@ const useStyles = makeStyles({
       color: 'white', // set the font color here
     },
   },
-});
+});*/
 
 const NewBoardButton = () => {
   const dispatch = useAppDispatch();
-
-  const classes = useStyles();
 
   const [newBoardName, setNewBoardName] = useState<string>('');
 
@@ -56,11 +53,9 @@ const NewBoardButton = () => {
       type: 'textfield',
       label: 'New Board Name',
       props: {
-        className: classes.textField,
         label: 'New Board Name',
         value: newBoardName,
         onChange: handleInputChange,
-        InputProps: { className: classes.input },
       },
     },
     {

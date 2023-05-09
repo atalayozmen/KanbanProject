@@ -193,7 +193,6 @@ function AppbarComp() {
           display: 'flex',
           flexDirection: 'row',
           width: '100%',
-          backgroundColor: '#2c2c38',
         }}
         position='fixed'
       >
@@ -217,11 +216,7 @@ function AppbarComp() {
 
         <Toolbar sx={{ flexGrow: 1 }}>
           <Box sx={{ flexGrow: 1 }} />
-          <Button
-            onClick={onTaskButtonClick}
-            variant='contained'
-            sx={{ bgColor: '#2196f3' }}
-          >
+          <Button onClick={onTaskButtonClick} variant='contained'>
             + Add New Task
           </Button>
         </Toolbar>

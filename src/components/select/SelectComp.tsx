@@ -37,15 +37,20 @@ const SelectComp = (props: SelectCompProps) => {
           '& .MuiInputBase-input': {
             color: 'white', // set the font color here
           },
-          '& .MuiOutlinedInput-notchedOutline': {
-            borderColor: 'white',
+          'label + &': {
+            color: 'white',
           },
+
           width: '100%',
         }}
       >
         {options.map((option) => {
           return (
-            <MenuItem key={option.value + option.label} value={option.value}>
+            <MenuItem
+              sx={{ color: 'white' }}
+              key={option.value + option.label}
+              value={option.value}
+            >
               {option.label}
             </MenuItem>
           );

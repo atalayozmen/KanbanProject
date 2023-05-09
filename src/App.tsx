@@ -8,19 +8,48 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
   palette: {
-    primary: {
-      main: '#ffffff', // White
-    },
-    secondary: {
-      main: '#dc004e', // Red
-    },
     background: {
-      default: '#21212D', // Dark Grey
-
+      default: '#2C2C38', // Dark Grey
       paper: '#2C2C38', // Light Grey
-
-      // default: '#2C2C38', // Light Grey
-      // paper: '#21212D', // Dark Grey
+    },
+  },
+  components: {
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          background: '#2C2C38',
+        },
+      },
+    },
+    MuiToolbar: {
+      styleOverrides: {
+        root: {
+          background: '#2C2C38',
+        },
+      },
+    },
+    MuiInputBase: {
+      styleOverrides: {
+        input: {
+          color: 'white',
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          '& > fieldset': {
+            borderColor: '#404258',
+          },
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          color: '#bdbdbd',
+        },
+      },
     },
   },
 });
