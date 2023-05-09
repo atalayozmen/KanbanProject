@@ -52,20 +52,26 @@ const KanbanBoardComp = () => {
             }}
           >
             Welcome to my Kanban Board application built with React, Redux, MUI
-            and Typescript.
+            and TypeScript.
           </Typography>
 
           <Typography
             variant='h5'
-            sx={{ color: '#fff', marginLeft: '25vw', marginTop: '4vh' }}
+            sx={{ color: '#fff', marginLeft: '25vw', marginTop: '5vh' }}
           >
-            Use the "Create a new board" to start.
+            Use the "Create a new board" button to start.
           </Typography>
           <Typography
             variant='h5'
             sx={{ color: '#fff', marginLeft: '25vw', marginTop: '2vh' }}
           >
             Choose a board from the sidebar to view it.
+          </Typography>
+          <Typography
+            variant='h5'
+            sx={{ color: '#fff', marginLeft: '25vw', marginTop: '2vh' }}
+          >
+            Tasks can be dragged and dropped between columns.
           </Typography>
         </Box>
         <Box height={'10%'} />
