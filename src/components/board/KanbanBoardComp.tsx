@@ -19,7 +19,7 @@ const KanbanBoardComp = () => {
           sx={{
             display: 'grid',
             gridAutoFlow: 'column',
-            gridTemplateColumns: '0',
+            gridTemplateColumns: matches ? '18%' : '0', // first column is %18, to cover the sidebar in Desktop view
             gridAutoColumns: '33%',
             background: '#21212D',
             paddingLeft: '1vw',
@@ -29,7 +29,7 @@ const KanbanBoardComp = () => {
             overflowX: 'auto',
           }}
         >
-          <Box width={matches ? '18%' : '0'} />
+          <Box />
           {board.columns.map((column: Column) => (
             <ColumnComp {...column} key={column.id} />
           ))}

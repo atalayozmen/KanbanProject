@@ -208,7 +208,7 @@ function AppbarComp() {
           display='flex'
           justifyContent='center'
           alignItems='center'
-          maxWidth={'10%'}
+          maxWidth={'4%'}
         >
           <img
             style={{ maxWidth: '100%', minWidth: '40px', height: 'auto' }}
@@ -232,7 +232,7 @@ function AppbarComp() {
           >
             {chosenBoardName}
           </Typography>
-          {!matches && chosenBoard ? <BoardMenu /> : <></>}
+          {!matches ? <BoardMenu /> : <></>}
         </Box>
 
         <Toolbar sx={{ flexGrow: 1 }}>

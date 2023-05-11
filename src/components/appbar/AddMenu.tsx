@@ -1,10 +1,26 @@
 import * as React from 'react';
 import IconButton from '@mui/material/IconButton';
-import Menu from '@mui/material/Menu';
+import Menu, { MenuProps } from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import AddIcon from '@mui/icons-material/Add';
 import { useAppDispatch } from '../../hooks';
 import { setModalOpenState } from '../../slices/kanbanBoardSlice';
+import { styled } from '@mui/material';
+
+const StyledMenu = styled((props: MenuProps) => (
+  <Menu
+    elevation={0}
+    anchorOrigin={{
+      vertical: 'bottom',
+      horizontal: 'right',
+    }}
+    transformOrigin={{
+      vertical: 'top',
+      horizontal: 'right',
+    }}
+    {...props}
+  />
+))(({ theme }) => ({}));
 
 export default function AddMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -16,6 +32,10 @@ export default function AddMenu() {
 
   const handleNewTask = () => {
     dispatch(setModalOpenState('addTask'));
+    setAnchorEl(null);
+  };
+
+  const handleClose = () => {
     setAnchorEl(null);
   };
 
@@ -41,14 +61,22 @@ export default function AddMenu() {
       >
         <AddIcon sx={{ color: 'white', backgroundColor: 'primary' }} />
       </IconButton>
-      <Menu anchorEl={anchorEl} open={open}>
+      <StyledMenu
+        id='demo-customized-menu'
+        MenuListProps={{
+          'aria-labelledby': 'demo-customized-button',
+        }}
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+      >
         <MenuItem sx={{ color: 'white' }} onClick={handleNewBoard}>
           New Board
         </MenuItem>
         <MenuItem sx={{ color: 'white' }} onClick={handleNewTask}>
           New Task
         </MenuItem>
-      </Menu>
+      </StyledMenu>
     </div>
   );
 }

@@ -65,6 +65,15 @@ export default function BoardMenu() {
         open={open}
         onClose={handleClose}
       >
+        {kanbanBoards.length === 0 && (
+          <MenuItem
+            onClick={handleClose}
+            sx={{ color: '#FFFFFF' }}
+            disableRipple
+          >
+            No Boards
+          </MenuItem>
+        )}
         {kanbanBoards.map((board) => (
           <MenuItem
             sx={{ color: '#FFFFFF' }}
