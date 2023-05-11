@@ -208,7 +208,8 @@ function AppbarComp() {
           display='flex'
           justifyContent='center'
           alignItems='center'
-          maxWidth={'4%'}
+          paddingLeft={'8%'}
+          maxWidth={'5%'}
         >
           <img
             style={{ maxWidth: '100%', minWidth: '40px', height: 'auto' }}
