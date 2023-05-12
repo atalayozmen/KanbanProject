@@ -3,12 +3,13 @@ import { useEffect } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { Task, setTaskStatus } from '../../slices/kanbanBoardSlice';
+import { Column, Task, setTaskStatus } from '../../slices/kanbanBoardSlice';
 import { useDrag } from 'react-dnd/dist/hooks';
 import { CardActionArea } from '@material-ui/core';
 import ModalComp, { ModalElement } from '../modal/ModalComp';
 import SubTaskListSetDone from '../subtask/SubTaskListSetDone';
 import { useAppDispatch } from '../../hooks';
+import { useAppSelector } from '../../hooks';
 
 export interface TaskCompProps extends Task {
   columnId: number;
@@ -19,12 +20,6 @@ interface SelectPropOption {
   value: number;
   label: string;
 }
-
-const options: SelectPropOption[] = [
-  { value: 0, label: 'To Do' },
-  { value: 1, label: 'Doing' },
-  { value: 2, label: 'Done' },
-];
 
 const TaskComp = (props: TaskCompProps) => {
   const { id, name, description, subtasks, columnId, columnName } = props;
@@ -38,6 +33,13 @@ const TaskComp = (props: TaskCompProps) => {
     }),
     [subtasks]
   );
+  const chosenBoard = useAppSelector((state) => state.kanbanBoard.chosenBoard);
+
+  const columns = useAppSelector((state) => {
+    if (chosenBoard != null)
+      return state.kanbanBoard.kanbanBoards[chosenBoard].columns;
+    else return [];
+  });
 
   console.log(isDragging);
 
@@ -64,10 +66,10 @@ const TaskComp = (props: TaskCompProps) => {
   const handleSelectPropChange = (event: any) => {
     const value: number = parseInt(event.target.value);
 
-    const selectOption = options.find((option) => option.value === value);
+    const column = columns.find((option) => option.id === value);
 
-    if (selectOption !== undefined) {
-      setSelectPropOption(selectOption);
+    if (column !== undefined) {
+      setSelectPropOption({ value: column.id, label: column.name });
       dispatch(
         setTaskStatus({
           columnId: columnId,
@@ -142,20 +144,9 @@ const TaskComp = (props: TaskCompProps) => {
           native: true,
         },
       },
-      selectPropsOptions: [
-        {
-          value: '0',
-          label: 'To Do',
-        },
-        {
-          value: '1',
-          label: 'Doing',
-        },
-        {
-          value: '2',
-          label: 'Done',
-        },
-      ],
+      selectPropsOptions: columns.map((column: Column) => {
+        return { value: column.id.toString(), label: column.name };
+      }),
     },
   ];
 

@@ -5,7 +5,7 @@ import { setSubtaskDone } from '../../slices/kanbanBoardSlice';
 
 interface CheckableSubtaskCompProps {
   columnId: number;
-  taskId: number;
+  taskId: string;
   subtaskId: number;
   subtaskName: string;
   done: boolean;

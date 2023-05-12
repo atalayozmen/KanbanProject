@@ -24,7 +24,9 @@ const SidebarComp = () => {
             width: matches ? '18vw' : '0',
             boxSizing: 'border-box',
             backgroundColor: '#2c2c38',
+            minWidth: matches ? '200px' : '0',
           },
+          minWidth: matches ? '200px' : '0',
         }}
         variant='permanent'
         anchor='left'

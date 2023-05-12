@@ -33,15 +33,7 @@ const SubTaskListComp = (props: SubTaskListCompProps) => {
               value={subTask}
               onChange={(event) => onTextFieldChange(index, event.target.value)}
               sx={{
-                '& .MuiInputBase-input': {
-                  color: 'white', // set the font color here
-                },
                 width: '100%',
-              }}
-              InputLabelProps={{
-                style: {
-                  color: 'white', // set the label font color here
-                },
               }}
             ></TextField>
           </Grid>
@@ -54,7 +46,9 @@ const SubTaskListComp = (props: SubTaskListCompProps) => {
       ))}
 
       <Button
-        sx={{ marginBottom: '1vh' }}
+        sx={{
+          marginBottom: '1vh',
+        }}
         variant='contained'
         onClick={addSubTask}
       >

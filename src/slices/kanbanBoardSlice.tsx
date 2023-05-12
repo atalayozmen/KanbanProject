@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
+import uuid from 'react-uuid';
 
 export interface Subtask {
   id: number;
@@ -13,10 +14,9 @@ export interface Status {
 }
 
 export interface Task {
-  id: number;
+  id: string;
   name: string;
   description: string;
-  status: Status;
   subtasks: Subtask[];
 }
 
@@ -61,17 +61,17 @@ const kanbanBoardSlice = createSlice({
       const columns = [
         {
           id: 0,
-          name: 'TO DO',
+          name: 'To Do',
           tasks: [],
         },
         {
           id: 1,
-          name: 'DOING',
+          name: 'Doing',
           tasks: [],
         },
         {
           id: 2,
-          name: 'DONE',
+          name: 'Done',
           tasks: [],
         },
       ];
@@ -93,7 +93,7 @@ const kanbanBoardSlice = createSlice({
       const board = state.kanbanBoards.find((board) => board.id === boardId);
       if (board) {
         const newColumn: Column = {
-          id: Date.now(),
+          id: board.columns.length,
           name: columnName,
           tasks: [],
         };
@@ -132,14 +132,10 @@ const kanbanBoardSlice = createSlice({
         const column = board.columns.find((column) => column.id === columnId);
         if (column) {
           const newTask: Task = {
-            id: column.tasks.length,
+            id: uuid(),
             name: taskName,
             description: taskDescription,
-            status: {
-              columnId: columnId,
-              text:
-                columnId === 0 ? 'TO DO' : columnId === 1 ? 'DOING' : 'DONE',
-            },
+
             subtasks: subtasks,
           };
           column.tasks.push(newTask);
@@ -151,7 +147,7 @@ const kanbanBoardSlice = createSlice({
       action: PayloadAction<{
         boardId: number;
         columnId: number;
-        taskId: number;
+        taskId: string;
       }>
     ) => {
       const { columnId, taskId } = action.payload;
@@ -175,7 +171,7 @@ const kanbanBoardSlice = createSlice({
       state,
       action: PayloadAction<{
         columnId: number;
-        taskId: number;
+        taskId: string;
         subtaskName: string;
         done: boolean;
       }>
@@ -203,7 +199,7 @@ const kanbanBoardSlice = createSlice({
       state,
       action: PayloadAction<{
         columnId: number;
-        taskId: number;
+        taskId: string;
         subtaskId: number;
       }>
     ) => {
@@ -231,7 +227,7 @@ const kanbanBoardSlice = createSlice({
       state,
       action: PayloadAction<{
         columnId: number;
-        taskId: number;
+        taskId: string;
         newColumnId: number;
       }>
     ) => {
@@ -263,7 +259,7 @@ const kanbanBoardSlice = createSlice({
       state,
       action: PayloadAction<{
         columnId: number;
-        taskId: number;
+        taskId: string;
         subtaskId: number;
         done: boolean;
       }>

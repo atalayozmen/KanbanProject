@@ -5,7 +5,7 @@ import { Box } from '@mui/material';
 
 interface SubTaskListSetDoneProps {
   columnId: number;
-  taskId: number;
+  taskId: string;
   subTasks: Subtask[];
 }
 

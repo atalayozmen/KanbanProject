@@ -2,6 +2,7 @@ import React from 'react';
 import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
+  Column,
   Subtask,
   addTask,
   chooseBoard,
@@ -33,6 +34,11 @@ function AppbarComp() {
   const chosenBoard = useAppSelector((state) => state.kanbanBoard.chosenBoard);
   const chosenBoardName = useAppSelector(selectChosenBoardName);
   const modalOpenState = useAppSelector((state) => state.kanbanBoard.modalOpen);
+  const columns = useAppSelector((state) => {
+    if (chosenBoard != null)
+      return state.kanbanBoard.kanbanBoards[chosenBoard].columns;
+    else return [];
+  });
 
   const [newTaskName, setNewTaskName] = React.useState<string>('');
   const [newTaskDescription, setNewTaskDescription] =
@@ -58,12 +64,16 @@ function AppbarComp() {
   };
 
   const handleSelectPropChange = (event: any) => {
-    if (event.target.value === '0')
-      setSelectPropOption({ value: 0, label: 'To Do' });
-    if (event.target.value === '1')
-      setSelectPropOption({ value: 1, label: 'In Progress' });
-    if (event.target.value === '2')
-      setSelectPropOption({ value: 2, label: 'Done' });
+    console.log('event');
+    console.log(event);
+    const column = columns.find(
+      (column) => column.id === parseInt(event.target.value)
+    );
+    console.log('column');
+    console.log(column);
+    if (column !== undefined) {
+      setSelectPropOption({ value: column.id, label: column.name });
+    }
   };
 
   const handleNewTaskNameInputChange = (event: any) => {
@@ -146,20 +156,9 @@ function AppbarComp() {
         value: selectPropOption.value,
         onChange: handleSelectPropChange,
       },
-      selectPropsOptions: [
-        {
-          value: '0',
-          label: 'To Do',
-        },
-        {
-          value: '1',
-          label: 'Doing',
-        },
-        {
-          value: '2',
-          label: 'Done',
-        },
-      ],
+      selectPropsOptions: columns.map((column: Column) => {
+        return { value: column.id.toString(), label: column.name };
+      }),
     },
     {
       type: 'custom',
@@ -179,7 +178,9 @@ function AppbarComp() {
       label: 'Add Task',
       props: {
         sx: {
-          width: '50%',
+          borderRadius: '40px',
+          width: '100%',
+          backgroundColor: '#655DC3',
         },
         variant: 'contained',
         onClick: onModalAddTaskButtonClick,
@@ -204,36 +205,43 @@ function AppbarComp() {
         }}
         position='fixed'
       >
-        <Box
-          display='flex'
-          justifyContent='center'
-          alignItems='center'
-          paddingLeft={'8%'}
-          maxWidth={'5%'}
-        >
-          <img
-            style={{ maxWidth: '100%', minWidth: '40px', height: 'auto' }}
-            src={require('../../icons8-kanban-96.png')}
-            alt='knban'
-          ></img>
-        </Box>
+        {!matches ? (
+          <Box
+            key={'menu'}
+            display='flex'
+            justifyContent='center'
+            alignItems='center'
+            paddingLeft={'8%'}
+            maxWidth={'5%'}
+          >
+            <img
+              style={{ maxWidth: '100%', minWidth: '40px', height: 'auto' }}
+              src={require('../../icons8-kanban-96.png')}
+              alt='knban'
+            ></img>
+          </Box>
+        ) : (
+          <Box width={matches ? 'max(20%, 220px)' : '0'} />
+        )}
+
         <Box
           sx={{
-            marginLeft: matches ? '19vw' : '4vw',
             display: 'flex',
             justifyContent: 'start',
             alignItems: 'center',
+            maxWidth: matches ? '100%' : '200px',
           }}
         >
+          {!matches ? <BoardMenu /> : <></>}
           <Typography
             fontWeight='600'
             fontFamily='sans-serif'
             variant='h5'
             component='div'
+            noWrap
           >
             {chosenBoardName}
           </Typography>
-          {!matches ? <BoardMenu /> : <></>}
         </Box>
 
         <Toolbar sx={{ flexGrow: 1 }}>

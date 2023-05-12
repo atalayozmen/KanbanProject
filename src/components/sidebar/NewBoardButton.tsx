@@ -56,7 +56,7 @@ const NewBoardButton = () => {
     {
       type: 'button',
       label: 'Add Board',
-      props: { type: 'submit', variant: 'contained' },
+      props: { sx: { width: '100%' }, type: 'submit', variant: 'contained' },
     },
   ];
 

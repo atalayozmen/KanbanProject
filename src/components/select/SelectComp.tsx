@@ -4,6 +4,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { SelectProps } from '@mui/material/Select/Select';
 import { InputLabel } from '@mui/material';
+import { Typography } from '@mui/material';
 
 interface SelectCompProps extends SelectProps {
   inputlabel: string;
@@ -51,7 +52,9 @@ const SelectComp = (props: SelectCompProps) => {
               key={option.value + option.label}
               value={option.value}
             >
-              {option.label}
+              <Typography textTransform={'capitalize'}>
+                {option.label.toLowerCase()}
+              </Typography>
             </MenuItem>
           );
         })}

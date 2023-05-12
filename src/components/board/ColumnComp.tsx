@@ -6,6 +6,7 @@ import {
   addTask,
   deleteTask,
   selectChosenBoardId,
+  setTaskStatus,
 } from '../../slices/kanbanBoardSlice';
 import TaskComp, { TaskCompProps } from '../task/TaskComp';
 import { useDrop } from 'react-dnd/dist/hooks';
@@ -32,32 +33,17 @@ const ColumnComp = (props: Column) => {
     // This code will run every time the `boardId` value changes
   }, [boardId, props]);
 
-  const addTaskToColumn = (task: Task) => {
-    if (boardId != null) {
-      dispatch(
-        addTask({
-          columnId: id,
-          taskName: task.name,
-          taskDescription: task.description,
-          subtasks: task.subtasks,
-        })
-      );
-    }
-  };
-
-  const deleteItemFromColumn = (id: number, columnId: number) => {
-    if (boardId != null)
-      dispatch(
-        deleteTask({ boardId: boardId, columnId: columnId, taskId: id })
-      );
-  };
-
   const [{ isOver }, drop] = useDrop(
     () => ({
       accept: 'task',
       drop: (item: TaskCompProps) => {
-        addTaskToColumn(item);
-        deleteItemFromColumn(item.id, item.columnId);
+        dispatch(
+          setTaskStatus({
+            taskId: item.id,
+            columnId: item.columnId,
+            newColumnId: id,
+          })
+        );
       },
       collect: (monitor) => ({
         isOver: !!monitor.isOver(),
@@ -89,11 +75,12 @@ const ColumnComp = (props: Column) => {
       <Typography
         fontFamily='sans-serif'
         fontWeight={500}
+        textTransform={'capitalize'}
         sx={{ color: '#858995' }}
         variant='body1'
         component='span'
       >
-        {name === 'DOING' ? 'Doing' : name === 'TO DO' ? 'To Do' : 'Done'}
+        {name.toLowerCase()}
       </Typography>
 
       {tasks.map((task) => {

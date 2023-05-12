@@ -14,6 +14,17 @@ const theme = createTheme({
     },
   },
   components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#655DC3',
+          borderRadius: '40px',
+          '&:hover': {
+            backgroundColor: '#655DC3',
+          },
+        },
+      },
+    },
     MuiAppBar: {
       styleOverrides: {
         root: {

@@ -51,7 +51,7 @@ export default function BoardMenu() {
   };
 
   return (
-    <div>
+    <div style={{ paddingLeft: '12px', paddingRight: '12px' }}>
       <IconButton sx={{ color: '#FFFFFF' }} onClick={handleClick}>
         <KeyboardArrowDownIcon />
       </IconButton>
