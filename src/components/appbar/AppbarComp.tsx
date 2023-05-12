@@ -203,7 +203,7 @@ function AppbarComp() {
           flexDirection: 'row',
           width: '100%',
         }}
-        position='fixed'
+        position='sticky'
       >
         {!matches ? (
           <Box
@@ -256,7 +256,6 @@ function AppbarComp() {
           )}
         </Toolbar>
       </AppBar>
-      <Toolbar />
     </React.Fragment>
   );
 }

@@ -95,10 +95,10 @@ const KanbanBoardComp = () => {
               gridAutoColumns: matches ? '20%' : '40%',
               background: '#21212D',
               paddingLeft: '1vw',
-              height: '100vh',
+              height: '100%',
               width: '100%',
               overflowY: 'hidden',
-              overflowX: 'auto',
+              overflowX: 'scroll',
             }}
           >
             <Box />

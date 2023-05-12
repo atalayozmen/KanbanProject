@@ -2,9 +2,6 @@ import { Box, Grid, Typography } from '@mui/material';
 import React, { useEffect } from 'react';
 import {
   Column,
-  Task,
-  addTask,
-  deleteTask,
   selectChosenBoardId,
   setTaskStatus,
 } from '../../slices/kanbanBoardSlice';
@@ -65,11 +62,13 @@ const ColumnComp = (props: Column) => {
           ...shapeCircleStyles,
           display: 'inline-block',
           bgcolor:
-            name === 'DOING'
+            name === 'Doing'
               ? '#8370EF'
-              : name === 'TO DO'
+              : name === 'To Do'
               ? '#90caf9'
-              : '#1de9b6',
+              : name === 'Done'
+              ? '#1de9b6'
+              : '#e91e63',
         }}
       ></Box>
       <Typography
