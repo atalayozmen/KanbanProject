@@ -53,7 +53,12 @@ const ColumnComp = (props: Column) => {
   return (
     <Box
       ref={drop}
-      sx={{ paddingY: '2vh', paddingX: '1vw', background: '#21212D' }}
+      sx={{
+        transform: 'rotateX(180deg)',
+        paddingY: '2vh',
+        paddingX: '1vw',
+        background: '#21212D',
+      }}
     >
       <Box
         component='span'

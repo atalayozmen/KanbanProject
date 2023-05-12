@@ -89,10 +89,11 @@ const KanbanBoardComp = () => {
         <DndProvider backend={HTML5Backend}>
           <Grid
             sx={{
+              transform: 'rotateX(180deg)',
               display: 'grid',
               gridAutoFlow: 'column',
               gridTemplateColumns: matches ? 'max(18%, 200px)' : '0', // first column is %18, to cover the sidebar in Desktop view
-              gridAutoColumns: matches ? '20%' : '40%',
+              gridAutoColumns: matches ? '20%' : '50%',
               background: '#21212D',
               paddingLeft: '1vw',
               height: '100%',
@@ -106,7 +107,14 @@ const KanbanBoardComp = () => {
               <ColumnComp {...column} key={column.id} />
             ))}
 
-            <Box sx={{ paddingY: '2vh', height: '100vh' }}>
+            <Box
+              sx={{
+                transform: 'rotateX(180deg)',
+                paddingY: '2vh',
+                height: '100vh',
+                marginRight: '5vw',
+              }}
+            >
               <Box sx={{ ...shapeStyles, display: 'inline-block' }} />
 
               <Card
