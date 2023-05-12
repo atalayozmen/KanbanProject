@@ -112,7 +112,7 @@ const KanbanBoardComp = () => {
                 transform: 'rotateX(180deg)',
                 paddingY: '2vh',
                 height: '100vh',
-                marginRight: '5vw',
+                marginRight: '10px',
               }}
             >
               <Box sx={{ ...shapeStyles, display: 'inline-block' }} />

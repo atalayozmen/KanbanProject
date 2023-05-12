@@ -47,6 +47,7 @@ function AppbarComp() {
     React.useState<SelectPropOption>({ value: 0, label: 'To Do' });
   const [subtasks, setSubtasks] = React.useState<string[]>([]);
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+  const [errorModalOpen, setErrorModalOpen] = React.useState<boolean>(false);
 
   const matches = useMediaQuery('(min-width:600px)');
 
@@ -110,9 +111,16 @@ function AppbarComp() {
     handleCloseModal();
   };
 
+  const handleErrorModalClose = () => {
+    setErrorModalOpen(false);
+  };
   const onTaskButtonClick = () => {
-    setModalOpen(true);
-    dispatch(setModalOpenState('addTask'));
+    if (chosenBoard != null) {
+      setModalOpen(true);
+      dispatch(setModalOpenState('addTask'));
+    } else {
+      setErrorModalOpen(true);
+    }
   };
 
   const onAddSubtaskButtonClick = () => {
@@ -188,6 +196,33 @@ function AppbarComp() {
     },
   ];
 
+  const errorModalElements: ModalElement[] = [
+    {
+      type: 'typography',
+      label: 'Please create a board first',
+      props: {
+        sx: {
+          fontSize: '1.2rem',
+          textAlign: 'center',
+          color: '#FFFFFF',
+        },
+      },
+    },
+    {
+      type: 'button',
+      label: 'OK',
+      props: {
+        sx: {
+          borderRadius: '40px',
+          width: '10%',
+          backgroundColor: '#655DC3',
+        },
+        variant: 'contained',
+        onClick: handleErrorModalClose,
+      },
+    },
+  ];
+
   return (
     <React.Fragment>
       <ModalComp
@@ -195,6 +230,12 @@ function AppbarComp() {
         handleCloseModal={handleCloseModal}
         onSubmit={onModalAddTaskButtonClick}
         modalElements={modalElements}
+      />
+      <ModalComp
+        modalOpen={errorModalOpen}
+        handleCloseModal={handleErrorModalClose}
+        onSubmit={() => {}}
+        modalElements={errorModalElements}
       />
 
       <AppBar
