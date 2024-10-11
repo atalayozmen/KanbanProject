@@ -43,7 +43,7 @@ const SidebarComp = () => {
           >
             <img
               style={{ maxWidth: '100%', minWidth: '40px', height: 'auto' }}
-              src={require('../../icons8-kanban-96.png')}
+              src={require('../../icons/icons8-kanban-96.png')}
               alt='knban'
             ></img>
           </Box>
