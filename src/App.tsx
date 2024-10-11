@@ -5,6 +5,7 @@ import SidebarComp from './components/sidebar/SidebarComp';
 import AppbarComp from './components/appbar/AppbarComp';
 import KanbanBoardComp from './components/board/KanbanBoardComp';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { Auth0Provider } from '@auth0/auth0-react';
 
 const theme = createTheme({
   palette: {
@@ -67,14 +68,22 @@ const theme = createTheme({
 
 function App() {
   return (
-    <Box style={{}}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <AppbarComp />
-        <SidebarComp />
-        <KanbanBoardComp />
-      </ThemeProvider>
-    </Box>
+    <Auth0Provider
+      domain="dev-oejxs1b1vf1x4ns5.us.auth0.com"
+      clientId="fb4dcRPpxjLbDqD7RuDDOBAoGVWCIxu4"
+      authorizationParams={{
+        redirect_uri: window.location.origin
+      }}
+    >
+      <Box style={{}}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <AppbarComp />
+          <SidebarComp />
+          <KanbanBoardComp />
+        </ThemeProvider>
+      </Box>
+    </Auth0Provider>
   );
 }
 
