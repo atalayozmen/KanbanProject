@@ -15,9 +15,6 @@ import SubTaskListComp from '../subtask/SubTaskListComp';
 import BoardMenu from '../board/BoardMenu';
 import AddMenu from './AddMenu';
 import { useMediaQuery } from '@mui/material';
-import LoginButton from './LoginButton';
-import { useAuth0 } from "@auth0/auth0-react";
-import LogoutButton from './LogoutButton';
 
 const useStyles = makeStyles({
   input: {
@@ -51,12 +48,6 @@ function AppbarComp() {
   const [subtasks, setSubtasks] = React.useState<string[]>([]);
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const [errorModalOpen, setErrorModalOpen] = React.useState<boolean>(false);
-
-  const { user, isAuthenticated, isLoading } = useAuth0();
-
-  console.log(user);
-  console.log(isAuthenticated);
-  console.log(isLoading);
 
   const matches = useMediaQuery('(min-width:600px)');
 
@@ -296,9 +287,6 @@ function AppbarComp() {
 
         <Toolbar sx={{ flexGrow: 1 }}>
           <Box sx={{ flexGrow: 1 }} />
-          <LogoutButton />
-          <LoginButton />
-
           {matches ? (
             <Button onClick={onTaskButtonClick} variant='contained'>
               + Add New Task
