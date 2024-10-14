@@ -15,6 +15,11 @@ import SubTaskListComp from '../subtask/SubTaskListComp';
 import BoardMenu from '../board/BoardMenu';
 import AddMenu from './AddMenu';
 import { useMediaQuery } from '@mui/material';
+import LoginButton from './LoginButton';
+import { useAuth0 } from "@auth0/auth0-react";
+import LogoutButton from './LogoutButton';
+
+import { getProtectedResource } from "../../message.service";
 
 const useStyles = makeStyles({
   input: {
@@ -48,6 +53,21 @@ function AppbarComp() {
   const [subtasks, setSubtasks] = React.useState<string[]>([]);
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const [errorModalOpen, setErrorModalOpen] = React.useState<boolean>(false);
+
+  const { user, isAuthenticated, isLoading } = useAuth0();
+
+  console.log(user);
+  console.log(isAuthenticated);
+  console.log(isLoading);
+
+  const { getAccessTokenSilently } = useAuth0();
+
+  const sendRequest = async () => {
+    const accessToken = await getAccessTokenSilently();
+    const { data, error } = await getProtectedResource(accessToken);
+    console.log('data')
+    console.log(data);
+  };
 
   const matches = useMediaQuery('(min-width:600px)');
 
@@ -132,6 +152,8 @@ function AppbarComp() {
     newSubtasks[index] = value;
     setSubtasks(newSubtasks);
   };
+
+
 
   const modalElements: ModalElement[] = [
     {
@@ -287,6 +309,13 @@ function AppbarComp() {
 
         <Toolbar sx={{ flexGrow: 1 }}>
           <Box sx={{ flexGrow: 1 }} />
+          {isAuthenticated ? (
+            <LogoutButton />
+          ) : (
+            <LoginButton />
+          )}
+
+          <Button onClick={sendRequest} variant='contained'> Send Request</Button>
           {matches ? (
             <Button onClick={onTaskButtonClick} variant='contained'>
               + Add New Task
