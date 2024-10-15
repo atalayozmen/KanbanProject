@@ -309,13 +309,6 @@ function AppbarComp() {
 
         <Toolbar sx={{ flexGrow: 1 }}>
           <Box sx={{ flexGrow: 1 }} />
-          {isAuthenticated ? (
-            <LogoutButton />
-          ) : (
-            <LoginButton />
-          )}
-
-          <Button onClick={sendRequest} variant='contained'> Send Request</Button>
           {matches ? (
             <Button onClick={onTaskButtonClick} variant='contained'>
               + Add New Task
