@@ -15,10 +15,7 @@ import SubTaskListComp from '../subtask/SubTaskListComp';
 import BoardMenu from '../board/BoardMenu';
 import AddMenu from './AddMenu';
 import { useMediaQuery } from '@mui/material';
-import LoginButton from './LoginButton';
 import { useAuth0 } from "@auth0/auth0-react";
-import LogoutButton from './LogoutButton';
-
 import { getProtectedResource } from "../../message.service";
 
 const useStyles = makeStyles({
@@ -61,13 +58,6 @@ function AppbarComp() {
   console.log(isLoading);
 
   const { getAccessTokenSilently } = useAuth0();
-
-  const sendRequest = async () => {
-    const accessToken = await getAccessTokenSilently();
-    const { data, error } = await getProtectedResource(accessToken);
-    console.log('data')
-    console.log(data);
-  };
 
   const matches = useMediaQuery('(min-width:600px)');
 
