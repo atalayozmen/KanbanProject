@@ -50,14 +50,6 @@ function AppbarComp() {
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const [errorModalOpen, setErrorModalOpen] = React.useState<boolean>(false);
 
-  const { user, isAuthenticated, isLoading } = useAuth0();
-
-  console.log(user);
-  console.log(isAuthenticated);
-  console.log(isLoading);
-
-  const { getAccessTokenSilently } = useAuth0();
-
   const matches = useMediaQuery('(min-width:600px)');
 
   const handleCloseModal = () => {
