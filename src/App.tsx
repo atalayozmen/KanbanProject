@@ -4,7 +4,6 @@ import SidebarComp from './components/sidebar/SidebarComp';
 import AppbarComp from './components/appbar/AppbarComp';
 import KanbanBoardComp from './components/board/KanbanBoardComp';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { Auth0Provider } from '@auth0/auth0-react';
 
 const theme = createTheme({
   palette: {
@@ -78,23 +77,14 @@ function App() {
   }
 
   return (
-    <Auth0Provider
-      domain={domain}
-      clientId={clientId}
-      authorizationParams={{
-        redirect_uri: redirectUri,
-        audience: audience,
-      }}
-    >
-      <Box style={{}}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <AppbarComp />
-          <SidebarComp />
-          <KanbanBoardComp />
-        </ThemeProvider>
-      </Box>
-    </Auth0Provider>
+    <Box style={{}}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <AppbarComp />
+        <SidebarComp />
+        <KanbanBoardComp />
+      </ThemeProvider>
+    </Box>
   );
 }
 
