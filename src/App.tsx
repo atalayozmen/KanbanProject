@@ -64,18 +64,7 @@ const theme = createTheme({
   },
 });
 
-const domain = process.env.REACT_APP_AUTH0_DOMAIN;
-const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
-const redirectUri = process.env.REACT_APP_AUTH0_CALLBACK_URL;
-const audience = process.env.REACT_APP_AUTH0_AUDIENCE;
-
-
 function App() {
-
-  if (!(domain && clientId && redirectUri && audience)) {
-    return null;
-  }
-
   return (
     <Box style={{}}>
       <ThemeProvider theme={theme}>
