@@ -15,7 +15,6 @@ import SubTaskListComp from '../subtask/SubTaskListComp';
 import BoardMenu from '../board/BoardMenu';
 import AddMenu from './AddMenu';
 import { useMediaQuery } from '@mui/material';
-import { useAuth0 } from "@auth0/auth0-react";
 
 const useStyles = makeStyles({
   input: {

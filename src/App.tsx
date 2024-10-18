@@ -1,5 +1,4 @@
 import { Box, CssBaseline } from '@mui/material';
-import React from 'react';
 import './App.css';
 import SidebarComp from './components/sidebar/SidebarComp';
 import AppbarComp from './components/appbar/AppbarComp';

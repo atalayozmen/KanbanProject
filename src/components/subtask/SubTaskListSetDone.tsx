@@ -1,4 +1,3 @@
-import React from 'react';
 import { Subtask } from '../../slices/kanbanBoardSlice';
 import CheckableSubtaskComp from './CheckableSubtaskComp';
 import { Box } from '@mui/material';
