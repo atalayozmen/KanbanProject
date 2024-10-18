@@ -36,8 +36,6 @@ export default function BoardMenu() {
     setAnchorEl(event.currentTarget);
   };
   const handleMenuItemClicked = (event: any) => {
-    console.log('event target');
-    console.log(event.target.innerText);
     kanbanBoards.forEach((board) => {
       if (board.boardName === event.target.innerText) {
         dispatch(chooseBoard(board.id));
