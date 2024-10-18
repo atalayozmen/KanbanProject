@@ -6,6 +6,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { useAppDispatch } from '../../hooks';
 import { setModalOpenState } from '../../slices/kanbanBoardSlice';
 import { styled } from '@mui/material';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const StyledMenu = styled((props: MenuProps) => (
   <Menu

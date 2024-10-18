@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material'
 import { useAppDispatch, useAppSelector } from '../../hooks'
 import {
@@ -19,6 +19,12 @@ import { LoginButton } from './LoginButton'
 import { LogoutButton } from './LogoutButton'
 import { KanbanIcon } from './KanbanIcon'
 import { useAuth0 } from '@auth0/auth0-react'
+import apiClient from '../../api/apiClient'
+import {
+    getPublicRequest,
+    getPrivateRequest,
+} from '../../api/services/kanbanService'
+import { addAccessTokenInterceptor } from '../../api/apiClient'
 
 const useStyles = makeStyles({
     input: {
@@ -55,7 +61,13 @@ function AppbarComp() {
     const [modalOpen, setModalOpen] = React.useState<boolean>(false)
     const [errorModalOpen, setErrorModalOpen] = React.useState<boolean>(false)
 
-    const { isAuthenticated, user } = useAuth0()
+    const { isAuthenticated, user, getAccessTokenSilently } = useAuth0()
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            addAccessTokenInterceptor(getAccessTokenSilently)
+        }
+    }, [getAccessTokenSilently, isAuthenticated])
 
     const matches = useMediaQuery('(min-width:600px)')
 
@@ -129,6 +141,13 @@ function AppbarComp() {
 
     const onAddSubtaskButtonClick = () => {
         setSubtasks([...subtasks, ''])
+    }
+
+    const callApi = async () => {
+        const response1 = await getPublicRequest()
+        console.log(response1)
+        const response2 = await getPrivateRequest()
+        console.log(response2)
     }
 
     const onSubtaskTextFieldChange = (index: number, value: string) => {
@@ -279,6 +298,7 @@ function AppbarComp() {
                 <Toolbar sx={{ flexGrow: 1 }}>
                     <Typography> Welcome {user?.given_name}</Typography>
                     <Box sx={{ flexGrow: 1 }} />
+                    <Button onClick={callApi}></Button>
                     {isAuthenticated ? <LogoutButton /> : <LoginButton />}
                     {matches ? (
                         <Button onClick={onTaskButtonClick} variant="contained">
