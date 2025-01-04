@@ -8,7 +8,6 @@ A **Kanban Board** built with **React**, **Redux Toolkit**, **Material-UI (MUI)*
 - **Drag & Drop**: Move tasks between columns to update their status.  
 - **Subtasks**: Add subtasks to break down tasks into smaller steps.  
 - **Responsive UI**: Adaptable design for various screen sizes with Material-UI.  
-- **Auth0 Authentication**: Manage secure user authentication and access.
 
 ## Quick Start
 
