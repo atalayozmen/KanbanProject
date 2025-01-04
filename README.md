@@ -1,46 +1,43 @@
-# Getting Started with Create React App
+# Kanban Board Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A **Kanban Board** built with **React**, **Redux Toolkit**, **Material-UI (MUI)**, and **TypeScript**, providing a clean and intuitive interface for task management. This project also integrates **Auth0** for authentication.
 
-## Available Scripts
+## Features
+- **Multiple Boards**: Create and switch between multiple Kanban boards.  
+- **Columns & Tasks**: Add, remove, or rename columns and tasks.  
+- **Drag & Drop**: Move tasks between columns to update their status.  
+- **Subtasks**: Add subtasks to break down tasks into smaller steps.  
+- **Responsive UI**: Adaptable design for various screen sizes with Material-UI.  
+- **Auth0 Authentication**: Manage secure user authentication and access.
 
-In the project directory, you can run:
+## Quick Start
 
-### `npm start`
+1. **Clone the repository**:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+    git clone https://github.com/atalayozmen/KanbanProject.git
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+2. **Navigate into the folder**:
 
-### `npm test`
+    cd KanbanProject
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+3. **Install dependencies**:
 
-### `npm run build`
+    npm install
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+5. **Start the development server**:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    npm start
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Usage
+- **Create a New Board**: Click **“+ Create a new board”** in the sidebar.  
+- **Manage Columns**: Add or remove columns (e.g., “To Do”, “Doing”, “Done”).  
+- **Add Tasks**: Create new tasks under any column and add subtasks if needed.  
+- **Drag & Drop**: Rearrange tasks between columns to track progress.  
 
-### `npm run eject`
+## Technologies
+- **React** and **TypeScript**  
+- **Redux Toolkit** for state management  
+- **Material-UI (MUI)** for UI components  
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## License
+This project is licensed under the [MIT License](LICENSE).
